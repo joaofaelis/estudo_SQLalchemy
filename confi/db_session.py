@@ -58,3 +58,4 @@ def create_tables() -> None:
         create_engine()
     import models.model_base
     ModelBase.metadata.drop_all(__engine)
+    ModelBase.metadata.create_all(__engine)
