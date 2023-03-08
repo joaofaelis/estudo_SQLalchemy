@@ -28,4 +28,16 @@ def create_engine(sqlite: bool = False):
     else:
         conn_str = 'postgresql://user:password@localhost:5432/exemplo'
                     # BD instanciado, após é usuario, senha, local de conexão, porta padrão do postgres, nome do BD.
+        __engine = sa.create_engine(url=conn_str, echo=False)
+
+        return __engine
+
+def create_session() -> Session:
+    global __engine
+    if not __engine:
+        create_engine() #Caso não utilizar o postgress utilizar create_engine(sqlite=True)
+
+    __session = sessionmaker(__engine, expire_on_commit=False, class_=Session)
+
+
 
