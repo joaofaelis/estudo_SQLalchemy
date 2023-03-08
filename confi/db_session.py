@@ -13,6 +13,7 @@ from models.model_base import ModelBase
 __engine: Optional[Engine] = None # ENgine necessario para criar conexão e definir qual banco.
 
 def create_engine(sqlite: bool = False):
+    """FUnção  para configurar a conexão com o banco de daddos"""
     global __engine
 
     if __engine:
@@ -33,11 +34,16 @@ def create_engine(sqlite: bool = False):
         return __engine
 
 def create_session() -> Session:
+    """função criada para criar a sessão com o banco de dados"""
     global __engine
     if not __engine:
         create_engine() #Caso não utilizar o postgress utilizar create_engine(sqlite=True)
 
     __session = sessionmaker(__engine, expire_on_commit=False, class_=Session)
+
+    session: Session = __session()
+
+    return session
 
 
 
